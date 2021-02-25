@@ -108,7 +108,7 @@ class PurchasedProductStorage extends EdgeEntityStorageBase implements Purchased
   protected function doPostSave(EntityInterface $entity, $update) {
     parent::doPostSave($entity, $update);
 
-    // Rebuild the purchased plans cache on create or update.
+    // Rebuild the purchased products cache on create or update.
     if ($developer = $entity->getDeveloper()) {
       \Drupal::cache()->delete("apigee_m10n:dev:purchased_products:{$developer->getEmail()}");
     }
