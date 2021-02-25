@@ -23,6 +23,10 @@ services:
     class: Drupal\apigee_m10n\ApigeeSdkControllerFactory
     arguments: ['@apigee_edge.sdk_connector']
 
+  apigee_m10n.sdk_controller_factory_product:
+    class: Drupal\apigee_m10n\XApigeeSdkControllerFactory
+    arguments: ['@apigee_edge.sdk_connector']
+
   apigee_m10n.sdk_controller_proxy.product_bundle:
     class: Drupal\apigee_m10n\Entity\Storage\Controller\ProductBundleEntityControllerProxy
 
@@ -31,6 +35,9 @@ services:
 
   apigee_m10n.sdk_controller_proxy.purchased_plan:
     class: Drupal\apigee_m10n\Entity\Storage\Controller\DeveloperAcceptedRatePlanSdkControllerProxy
+
+  apigee_m10n.sdk_controller_proxy.purchased_product:
+    class: Drupal\apigee_m10n\Entity\Storage\Controller\XDeveloperAcceptedRatePlanSdkControllerProxy
 
   apigee_m10n.validate_monetization_enabled:
     class: Drupal\apigee_m10n\EventSubscriber\ValidateMonetizationEnabledSubscriber

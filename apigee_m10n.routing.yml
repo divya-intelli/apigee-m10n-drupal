@@ -50,6 +50,16 @@ apigee_m10n.settings.purchased_plan:
   options:
     _apigee_monetization_route: TRUE
 
+apigee_m10n.settings.purchased_product:
+  path: /admin/config/apigee-monetization/purchased-product-settings
+  defaults:
+    _controller: \Drupal\system\Controller\SystemController::systemAdminMenuBlockPage
+    _title: Api product purchase settings
+  requirements:
+    _permission: administer apigee monetization
+  options:
+    _apigee_monetization_route: TRUE
+
 entity.product_bundle.collection:
   path: /admin/config/apigee-monetization/product-bundle/list
   defaults:
@@ -129,6 +139,18 @@ entity.purchased_plan.developer_collection:
   requirements:
     user: '^[1-9]+[0-9]*$'
     _custom_access: \Drupal\apigee_m10n\Entity\ListBuilder\PurchasedPlanListBuilderForDeveloper::access
+  options:
+    _apigee_monetization_route: TRUE
+
+
+entity.purchased_product.developer_product_collection:
+  path: /user/{user}/monetization/purchased-product
+  defaults:
+    _controller: \Drupal\apigee_m10n\Entity\ListBuilder\PurchasedProductListBuilderForDeveloper::render
+    _title_callback: \Drupal\apigee_m10n\Entity\ListBuilder\PurchasedProductListBuilderForDeveloper::getPageTitle
+  requirements:
+    user: '^[1-9]+[0-9]*$'
+    _custom_access: \Drupal\apigee_m10n\Entity\ListBuilder\PurchasedProductListBuilderForDeveloper::access
   options:
     _apigee_monetization_route: TRUE
 
