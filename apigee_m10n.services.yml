@@ -32,6 +32,9 @@ services:
   apigee_m10n.sdk_controller_proxy.purchased_plan:
     class: Drupal\apigee_m10n\Entity\Storage\Controller\DeveloperAcceptedRatePlanSdkControllerProxy
 
+  apigee_m10n.sdk_controller_proxy.purchased_product:
+    class: Drupal\apigee_m10n\Entity\Storage\Controller\DeveloperAcceptedRatePlanXSdkControllerProxy
+
   apigee_m10n.validate_monetization_enabled:
     class: Drupal\apigee_m10n\EventSubscriber\ValidateMonetizationEnabledSubscriber
     arguments: ['@apigee_m10n.monetization', '@messenger']

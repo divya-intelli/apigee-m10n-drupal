@@ -27,6 +27,7 @@ use Apigee\Edge\Api\Monetization\Controller\ApiProductControllerInterface;
 use Apigee\Edge\Api\Monetization\Controller\CompanyPrepaidBalanceController;
 use Apigee\Edge\Api\Monetization\Controller\CompanyPrepaidBalanceControllerInterface;
 use Apigee\Edge\Api\Monetization\Controller\DeveloperAcceptedRatePlanController;
+use Apigee\Edge\Api\ApigeeX\Controller\DeveloperAcceptedRatePlanController as ApigeeXDeveloperAcceptedRatePlanController;
 use Apigee\Edge\Api\Monetization\Controller\DeveloperController;
 use Apigee\Edge\Api\Monetization\Controller\DeveloperPrepaidBalanceController;
 use Apigee\Edge\Api\Monetization\Controller\DeveloperPrepaidBalanceControllerInterface;
@@ -197,6 +198,23 @@ class ApigeeSdkControllerFactory implements ApigeeSdkControllerFactoryInterface 
       $this->controllers[__FUNCTION__] = $this->controllers[__FUNCTION__] ?? [];
       // Create a new balance controller.
       $this->controllers[__FUNCTION__][$developer_id] = new DeveloperAcceptedRatePlanController(
+        $developer_id,
+        $this->getOrganization(),
+        $this->getClient()
+      );
+    }
+    return $this->controllers[__FUNCTION__][$developer_id];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function developerAcceptedRatePlanXController(string $developer_id): ApigeeXDeveloperAcceptedRatePlanController {
+    if (empty($this->controllers[__FUNCTION__][$developer_id])) {
+      // Don't assume the bucket has been initialized.
+      $this->controllers[__FUNCTION__] = $this->controllers[__FUNCTION__] ?? [];
+      // Create a new balance controller.
+      $this->controllers[__FUNCTION__][$developer_id] = new ApigeeXDeveloperAcceptedRatePlanController(
         $developer_id,
         $this->getOrganization(),
         $this->getClient()
