@@ -10,7 +10,6 @@
         "commerceguys/intl": "~1.0",
         "drupal/apigee_edge": "dev-newd10 as 2.0.2",
         "drupal/core": "^9.4 || ^10.1",
-        "drupal/requirement": "dev-newd10 as 1.1",
         "apigee/apigee-client-php": "dev-newd10 as 2.0.19"
     },
     "require-dev": {
