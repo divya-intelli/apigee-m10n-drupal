@@ -8,7 +8,7 @@
         "ext-bcmath": "*",
         "cweagans/composer-patches": "~1.6",
         "commerceguys/intl": "~1.0",
-        "drupal/apigee_edge": "dev-newd10 as 2.0.2",
+        "drupal/apigee_edge": "dev-drupal10-prep1 as 2.0.2",
         "drupal/core": "^9.4 || ^10.1",
         "drupal/requirement": "dev-newd10",
         "apigee/apigee-client-php": "dev-drupal10-prep as 2.0.19"
