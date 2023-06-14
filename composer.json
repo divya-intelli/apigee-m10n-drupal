@@ -4,11 +4,11 @@
     "type": "drupal-module",
     "description": "Apigee Edge Monetization for Drupal",
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "~8.0 || ~8.1",
         "ext-bcmath": "*",
         "cweagans/composer-patches": "~1.6",
         "commerceguys/intl": "~1.0",
-        "drupal/apigee_edge": "dev-drupal10-prep as 2.0.5",
+        "drupal/apigee_edge": "dev-dev-patch-846 as 2.0.5",
         "drupal/core": "^9.4 || ^10.0",
         "drupal/requirement": "dev-drupal10-prep",
         "apigee/apigee-client-php": "dev-drupal10-prep as 2.0.19"
