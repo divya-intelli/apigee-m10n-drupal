@@ -44,7 +44,6 @@ jobs:
         include:
           - php-version: "8.1"
             drupal-core: "10.0.x"
-            drupal-core: "10.1.x"
 
     steps:
 
