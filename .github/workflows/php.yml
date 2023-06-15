@@ -43,8 +43,8 @@ jobs:
           - "X"
         include:
           - php-version: "8.1"
-            drupal-core:
-              - "10.0.x"
+            drupal-core: "10.0.x"
+            drupal-core: "10.1.x"
 
     steps:
 
@@ -100,7 +100,7 @@ jobs:
         composer config preferred-install."drupal/apigee_edge" source
         composer config preferred-install."apigee/apigee-client-php" source
         composer require drupal/rules:3.x-dev@dev
-        composer require --dev drush/drush
+        # composer require --dev drush/drush
         composer config minimum-stability dev
         composer require drupal/commerce:^2.16
         composer require drupal/token:~1.0
