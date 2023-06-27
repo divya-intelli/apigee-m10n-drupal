@@ -111,15 +111,15 @@ class DatestampFormatterKernelTest extends MonetizationKernelTestBase {
         'custom_date_format' => $custom_date_format,
         'timezone' => '',
         'tooltip' => [
-          'date_format'=> $date_format,
-          'custom_date_format'=> 'm/d/Y'
+          'date_format' => $date_format,
+          'custom_date_format' => 'm/d/Y'
         ],
         'time_diff' => [
-          'enabled' => false,
+          'enabled' => FALSE,
           'future_format' => '@interval hence',
-          'past_format'=> '@interval ago',
+          'past_format' => '@interval ago',
           'granularity' => 2,
-          'refresh'=> 60,
+          'refresh' => 60,
         ]
       ],
       'label' => TRUE,
