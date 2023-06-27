@@ -41,11 +41,19 @@ jobs:
         instance-type:
           - "Edge"
           - "X"
-        include:
+         include:
           - php-version: "8.1"
             drupal-core: "10.0.x"
+            instance-type: "Edge"
+          - php-version: "8.1"
+            drupal-core: "10.0.x"
+            instance-type: "X"
           - php-version: "8.1"
             drupal-core: "10.1.x"
+            instance-type: "Edge"
+          - php-version: "8.1"
+            drupal-core: "10.1.x"
+            instance-type: "X"
 
     steps:
 
