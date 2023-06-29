@@ -43,8 +43,10 @@ class AddCreditCustomAmountTest extends AddCreditFunctionalJavascriptTestBase {
    */
   protected $developer;
 
+  /**
+   * {@inheritdoc}
+   */
   protected $defaultTheme = 'claro';
-
 
   /**
    * {@inheritdoc}
