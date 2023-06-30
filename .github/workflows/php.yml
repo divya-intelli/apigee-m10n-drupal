@@ -109,6 +109,7 @@ jobs:
         composer config minimum-stability dev
         composer require drupal/commerce:^2.16
         composer require drupal/token:~1.0
+        composer require drupal/apigee_edge
         composer require wikimedia/composer-merge-plugin
         composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
