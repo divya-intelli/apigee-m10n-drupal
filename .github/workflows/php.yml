@@ -81,14 +81,19 @@ jobs:
       id: composercache
       run: |
         cd drupal
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
+        echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache composer dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ steps.composercache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
+
+    - name: Checkout apigee_m10n module
+      uses: actions/checkout@v3.0.0
+      with:
+        path: drupal/modules/contrib/apigee_m10n
 
     - name: "Allow plugins and dev dependencies"
       run: |
@@ -101,25 +106,17 @@ jobs:
         composer config --no-plugins allow-plugins.composer/package-versions-deprecated true
         composer config --no-plugins allow-plugins.cweagans/composer-patches true
         composer config --no-plugins allow-plugins.php-http/discovery true
+        composer config preferred-install."drupal/apigee_edge" source
+        composer config preferred-install."apigee/apigee-client-php" source
         composer config minimum-stability dev
         composer require drupal/commerce:^2.16
         composer require drupal/token:~1.0
-        composer require --dev drush/drush
         composer require wikimedia/composer-merge-plugin
+        composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
         composer update --with-all-dependencies
+        composer config --no-plugins allow-plugins.drupal/console-extend-plugin true
         composer require --dev phpspec/prophecy-phpunit:^2
-        
-    - name: Checkout apigee_m10n module
-      uses: actions/checkout@v3.0.0
-      with:
-        path: drupal/modules/contrib/apigee_m10n
-        
-    - name: 'Update'
-      run: |
-        cd drupal
-        composer update --with-all-dependencies
-
 
     - name: "PHPCS and setting up Apigee X environment"
       if: ${{ matrix.instance-type == 'X' }}
