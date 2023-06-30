@@ -93,6 +93,7 @@ jobs:
     - name: Checkout apigee_m10n module
       uses: actions/checkout@v3.0.0
       with:
+        ref: 'd10-prep'
         path: drupal/modules/contrib/apigee_m10n
 
     - name: "Allow plugins and dev dependencies"
@@ -109,7 +110,6 @@ jobs:
         composer config minimum-stability dev
         composer require drupal/commerce:^2.16
         composer require drupal/token:~1.0
-        composer require drupal/apigee_edge
         composer require wikimedia/composer-merge-plugin
         composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
