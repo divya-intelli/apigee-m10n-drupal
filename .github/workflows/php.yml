@@ -116,6 +116,7 @@ jobs:
         
     - name: 'Update'
       run: |
+        cd drupal
         composer update --with-all-dependencies
 
 
