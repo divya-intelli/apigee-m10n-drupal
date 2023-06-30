@@ -106,6 +106,8 @@ jobs:
         composer config --no-plugins allow-plugins.composer/package-versions-deprecated true
         composer config --no-plugins allow-plugins.cweagans/composer-patches true
         composer config --no-plugins allow-plugins.php-http/discovery true
+        composer config prefer-stable."drupal/apigee_edge" false
+        composer config prefer-stable."apigee/apigee-client-php" false
         composer config preferred-install."drupal/apigee_edge" source
         composer config preferred-install."apigee/apigee-client-php" source
         composer config minimum-stability dev
