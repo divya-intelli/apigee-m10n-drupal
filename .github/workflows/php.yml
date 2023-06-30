@@ -116,8 +116,7 @@ jobs:
         
     - name: 'Update'
       run: |
-        composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
-                composer update --with-all-dependencies
+        composer update --with-all-dependencies
 
 
     - name: "PHPCS and setting up Apigee X environment"
