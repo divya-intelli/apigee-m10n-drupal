@@ -110,6 +110,7 @@ jobs:
         composer require wikimedia/composer-merge-plugin
         composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
+        composer config --json extra.patches."apigee/apigee-client-php" '{ "Added method getSupportedTypes which is added in symfony 6.3": "https://patch-diff.githubusercontent.com/raw/apigee/apigee-client-php/pull/315.patch"}'
         composer update --with-all-dependencies
         composer require --dev phpspec/prophecy-phpunit:^2
 
