@@ -28,6 +28,7 @@ use Drupal\address\LabelHelper;
 use Drupal\apigee_edge\SDKConnectorInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\requirement\Plugin\RequirementBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -100,7 +101,8 @@ class CommerceStore extends RequirementBase implements ContainerFactoryPluginInt
       }
     }
     catch (\Exception $exception) {
-      watchdog_exception('apigee_m10n_add_credit', $exception);
+      $logger = \Drupal::logger('apigee_m10n_add_credit');
+      Error::logException($logger, $exception);
     }
   }
 
@@ -234,7 +236,8 @@ class CommerceStore extends RequirementBase implements ContainerFactoryPluginInt
       $store->save();
     }
     catch (\Exception $exception) {
-      watchdog_exception('apigee_m10n_add_credit', $exception);
+      $logger = \Drupal::logger('apigee_m10n_add_credit');
+      Error::logException($logger, $exception);
     }
   }
 

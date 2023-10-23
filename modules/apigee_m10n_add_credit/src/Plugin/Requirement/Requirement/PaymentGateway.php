@@ -23,6 +23,7 @@ use Drupal\commerce_payment\PaymentGatewayManager;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\requirement\Plugin\RequirementBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -131,7 +132,8 @@ class PaymentGateway extends RequirementBase implements ContainerFactoryPluginIn
       $gateway->save();
     }
     catch (\Exception $exception) {
-      watchdog_exception('apigee_m10n_add_credit', $exception);
+      $logger = \Drupal::logger('apigee_m10n_add_credit');
+      Error::logException($logger, $exception);
     }
   }
 

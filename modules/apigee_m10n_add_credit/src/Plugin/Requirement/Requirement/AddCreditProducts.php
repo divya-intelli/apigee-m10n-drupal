@@ -29,6 +29,7 @@ use Drupal\commerce_price\Price;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\requirement\Plugin\RequirementBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -125,7 +126,8 @@ class AddCreditProducts extends RequirementBase implements ContainerFactoryPlugi
       });
     }
     catch (\Exception $exception) {
-      watchdog_exception('apigee_kickstart', $exception);
+      $logger = \Drupal::logger('apigee_kickstart');
+      Error::logException($logger, $exception);
     }
   }
 
@@ -238,7 +240,8 @@ class AddCreditProducts extends RequirementBase implements ContainerFactoryPlugi
           ->save();
       }
       catch (\Exception $exception) {
-        watchdog_exception('apigee_kickstart', $exception);
+        $logger = \Drupal::logger('apigee_kickstart');
+        Error::logException($logger, $exception);
       }
     }
   }

@@ -20,6 +20,7 @@
 namespace Drupal\apigee_m10n\Plugin\Requirement\Requirement;
 
 use Drupal\apigee_m10n\ApigeeEdgeSdkConnectorTrait;
+use Drupal\Core\Utility\Error;
 use Drupal\requirement\Plugin\RequirementBase;
 
 /**
@@ -57,7 +58,8 @@ class ApigeeEdgeConnection extends RequirementBase {
       return TRUE;
     }
     catch (\Exception $exception) {
-      watchdog_exception('requirement', $exception);
+      $logger = \Drupal::logger('requirement');
+      Error::logException($logger, $exception);
     }
 
     return FALSE;

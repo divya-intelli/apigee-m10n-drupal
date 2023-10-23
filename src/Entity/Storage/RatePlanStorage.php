@@ -30,6 +30,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Cache\MemoryCache\MemoryCacheInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Utility\Error;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -114,7 +115,8 @@ class RatePlanStorage extends EdgeEntityStorageBase implements RatePlanStorageIn
           }
         }
         catch (InvalidRatePlanIdException $exception) {
-          watchdog_exception('apigee_m10n', $exception);
+          $logger = \Drupal::logger('apigee_m10n');
+          Error::logException($logger, $exception);
         }
       }
       $this->invokeStorageLoadHook($entities);

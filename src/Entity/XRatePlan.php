@@ -47,6 +47,7 @@ use Drupal\apigee_m10n\Entity\Property\StartTimePropertyAwareDecoratorTrait;
 use Drupal\apigee_m10n\Entity\Property\XPackagePropertyAwareDecoratorTrait;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\user\Entity\User;
 
 /**
@@ -236,7 +237,8 @@ class XRatePlan extends FieldableEdgeEntityBase implements XRatePlanInterface {
         }
       }
       catch (InvalidRatePlanIdException $exception) {
-        watchdog_exception('apigee_m10n', $exception);
+        $logger = \Drupal::logger('apigee_m10n');
+        Error::logException($logger, $exception);
       }
     }
 
