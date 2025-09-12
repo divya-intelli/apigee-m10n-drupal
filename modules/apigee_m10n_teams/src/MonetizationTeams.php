@@ -39,9 +39,11 @@ use Drupal\apigee_m10n_teams\Entity\Form\TeamPurchasedPlanForm;
 use Drupal\apigee_m10n_teams\Entity\Form\TeamPurchasedProductForm;
 use Drupal\apigee_m10n_teams\Entity\Routing\MonetizationTeamsEntityRouteProvider;
 use Drupal\apigee_m10n_teams\Entity\Storage\TeamProductBundleStorage;
+use Drupal\apigee_m10n_teams\Entity\Storage\TeamXProductStorage;
 use Drupal\apigee_m10n_teams\Entity\Storage\TeamPurchasedPlanStorage;
 use Drupal\apigee_m10n_teams\Entity\Storage\TeamPurchasedProductStorage;
 use Drupal\apigee_m10n_teams\Entity\TeamProductBundle;
+use Drupal\apigee_m10n_teams\Entity\TeamXProduct;
 use Drupal\apigee_m10n_teams\Entity\TeamsPurchasedPlan;
 use Drupal\apigee_m10n_teams\Entity\TeamsPurchasedProduct;
 use Drupal\apigee_m10n_teams\Entity\TeamsRatePlan;
@@ -131,6 +133,20 @@ class MonetizationTeams implements MonetizationTeamsInterface {
       $entity_types['product_bundle']->setStorageClass(TeamProductBundleStorage::class);
     }
 
+    if (isset($entity_types['xproduct'])) {
+      // Use our class to override the original entity class.
+      $entity_types['xproduct']->setClass(TeamXProduct::class);
+      // Create a link template for team product bundles.
+      $entity_types['xproduct']->setLinkTemplate('team', '/teams/{team}/monetization/xproduct/{xproduct}');
+      // Get the entity route providers.
+      $route_providers = $entity_types['xproduct']->getRouteProviderClasses();
+      // Override the `html` route provider.
+      $route_providers['html'] = MonetizationTeamsEntityRouteProvider::class;
+      $entity_types['xproduct']->setHandlerClass('route_provider', $route_providers);
+      // Override the storage class.
+      $entity_types['xproduct']->setStorageClass(TeamXProductStorage::class);
+    }
+
     // Overrides for the `rate_plan` entity.
     if (isset($entity_types['rate_plan'])) {
       // Use our class to override the original entity class.
@@ -183,7 +199,6 @@ class MonetizationTeams implements MonetizationTeamsInterface {
       // Create a link template for team purchased product collection.
       $entity_types['purchased_product']->setLinkTemplate('team_collection', '/teams/{team}/monetization/purchased-product');
     }
-
   }
 
   /**
@@ -216,6 +231,29 @@ class MonetizationTeams implements MonetizationTeamsInterface {
       // Team permission results completely override user permissions.
       return $access->isAllowed() ? $access : AccessResult::forbidden($access->getReason());
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isxTeamAlreadySubscribed(string $team_id, TeamsXRatePlan $rate_plan): bool {
+    // Use cached result if available.
+    // See: \Drupal\apigee_m10n_teams\Entity\Storage\TeamPurchasedProductStorage::loadByTeamId()
+    $cid = "apigee_m10n_teams:dev:team_purchased_product:{$team_id}";
+    if ($cache = \Drupal::cache()->get($cid)) {
+      $teamPurchases = $cache->data;
+    }
+    else {
+      $teamPurchases = TeamsPurchasedProduct::loadByTeamId($team_id);
+      \Drupal::cache()->set($cid, $teamPurchases, strtotime('now + 5 minutes'));
+    }
+    foreach ($teamPurchases as $team_purchased_plan) {
+      if (($team_purchased_plan->decorated()->getApiProduct() == $rate_plan->decorated()->getApiProduct()) && (empty($team_purchased_plan->decorated()->getEndTime()))) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
   }
 
   /**
