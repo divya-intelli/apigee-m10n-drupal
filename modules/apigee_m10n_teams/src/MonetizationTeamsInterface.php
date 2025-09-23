@@ -144,7 +144,7 @@ interface MonetizationTeamsInterface {
    * @param \Drupal\apigee_edge\Entity\ApiProductInterface $api_product
    *   The 'api_product'  entity.
    * @param \Drupal\apigee_edge_teams\Entity\TeamInterface $team
-   *   The 'api_product'  entity.
+   *   The 'team' entity.
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The user account.
    *
@@ -152,5 +152,16 @@ interface MonetizationTeamsInterface {
    *   Whether or not the user has access to the entity.
    */
   public function apiProductTeamAssignmentAccess(ApiProductInterface $api_product, TeamInterface $team, AccountInterface $account): ?AccessResultInterface;
+
+  /**
+   * Returns the billing type of an appgroup.
+   *
+   * @param \Drupal\apigee_edge_teams\Entity\TeamInterface $team
+   *   Appgroup entity.
+   *
+   * @return string|null
+   *   Billing type.
+   */
+  public function getAppGroupBillingtype(TeamInterface $team): ?string;
 
 }
