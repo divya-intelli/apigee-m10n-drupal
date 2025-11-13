@@ -111,6 +111,14 @@ jobs:
       with:
         path: drupal/modules/contrib/apigee_m10n
 
+    - name: Force fresh dependency resolution for development branches (Fixes Security Advisory Block)
+      # This step forces a fresh dependency resolution, allowing Composer to bypass the security block
+      # by finding and installing the newly released patched version (e.g., symfony/http-foundation 7.3.7).
+      if: contains(matrix.drupal-core, 'x')
+      run: |
+        echo "Removing composer.lock to force update to secure symfony dependencies."
+        rm -f drupal/composer.lock
+
     - name: "Allow plugins and dev dependencies"
       run: |
         cd drupal
@@ -144,7 +152,7 @@ jobs:
         echo "APIGEE_EDGE_ORGANIZATION=$APIGEE_EDGE_HYBRID_ORGANIZATION" >> $GITHUB_ENV
         echo "APIGEE_EDGE_ENDPOINT=$APIGEE_EDGE_HYBRID_ENDPOINT" >> $GITHUB_ENV
         composer show > composer-show.txt
- 
+  
     - name: Artifacts
       uses: actions/upload-artifact@v4
       with:
