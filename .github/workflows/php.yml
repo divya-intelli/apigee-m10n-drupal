@@ -125,8 +125,8 @@ jobs:
         composer config preferred-install."drupal/apigee_edge" source
         composer config preferred-install."apigee/apigee-client-php" source
         composer config minimum-stability dev
-        composer require drupal/commerce:^3.0 --with-all-dependencies
-        composer require drupal/token:~1.0 --with-all-dependencies
+        # composer require drupal/commerce:^3.0
+        # composer require drupal/token:~1.0
         composer require wikimedia/composer-merge-plugin
         composer config --json extra.merge-plugin.require '["modules/contrib/apigee_m10n/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
